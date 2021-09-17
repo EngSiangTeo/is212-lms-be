@@ -14,6 +14,10 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
-    return $request->user();
+// Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
+//     return $request->user();
+// });
+
+Route::namespace('Account')->name('account.')->group(function () {
+    Route::post('/loginByEmail', 'LoginApiController@loginByEmail')->name('login_by_email');
 });
