@@ -4,11 +4,12 @@
 <rule ref="PSR2"/>
 <file>../../app/</file>
 <file>../../config/</file>
-<file>../../database/</file>
+<file>../../database/seeders</file>
+<file>../../database/factories</file>
 <file>../../routes/</file>
 <exclude-pattern>../../vendor</exclude-pattern>
 <exclude-pattern>../../resources</exclude-pattern>
-<exclude-pattern>../../database/</exclude-pattern>
+<exclude-pattern>../../database/migirations</exclude-pattern>
 <exclude-pattern>../../storage/</exclude-pattern>
 <exclude-pattern>../../node_modules/</exclude-pattern>
 </ruleset>
