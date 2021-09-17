@@ -6,7 +6,6 @@ use League\Csv\Reader;
 use Illuminate\Database\Seeder;
 use App\Modules\Account\User\Models\User;
 
-
 class UserSeeder extends Seeder
 {
     /**
