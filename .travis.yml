@@ -6,6 +6,8 @@ php:
 setup_env: &setup_env
   before_script:
     - composer install --no-interaction
+    - cp .env.example .env
+    - php artisan key:generate
 
 jobs:
   include:
@@ -13,3 +15,11 @@ jobs:
       <<: *setup_env
       script:
         - make format_check
+    - stage: "Tests"
+      name: "Unit Test PHP"
+      services:
+        - mysql
+      <<: *setup_env
+      script: 
+        - make test_setup
+        - php artisan test
