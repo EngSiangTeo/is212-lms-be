@@ -46,7 +46,6 @@ class LoginByEmailTest extends TestCase
             ->json('POST', '/api/loginByEmail', $payload)
             ->assertOk();
 
-
         $this
             ->assertDatabaseHas('oauth_access_tokens', [
                 'user_id' => $user->id,
