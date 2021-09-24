@@ -35,8 +35,11 @@ format_check:
 format_fix:
 	@./vendor/bin/phpcbf --standard=./tests/CI/phpcs.xml $(RUN_ARGS)
 
-setup_run_migration_test:
-	php artisan migrate --env=testing
+setup_copy_env:
+	@if [ ! -f .env ]; then \
+		cp .env.example .env; \
+		echo "Copied .env file"; \
+	fi
 
 setup_add_additional_database_user_in_travis:
 #   add additional username and password to databases in travis
@@ -53,6 +56,8 @@ else
 	$(call create_db,test_is212_lms)
 endif
 
-db_setup_test:
+test_setup:
+	make setup_copy_env
 	make setup_create_db_test
-	make setup_run_migration_test
+	php artisan migrate --env=testing
+	php artisan passport:keys

@@ -21,4 +21,5 @@ jobs:
         - mysql
       <<: *setup_env
       script: 
+        - make test_setup
         - php artisan test
