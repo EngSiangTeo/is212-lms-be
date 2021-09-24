@@ -1,0 +1,26 @@
+# Controls when the action will run.
+name: Push Epic Branch commit to environment
+on:
+  push:
+    branches:
+      - '**/epic/**'
+jobs:
+  sync-master-qa-dev:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v2
+      with:
+        token: ${{ secrets.REPO_ADMIN_TOKEN }}
+    - name: Set Git config
+      run: |
+          git config --local user.email "actions@github.com"
+          git config --local user.name "Github Actions"
+          git fetch --unshallow
+    - name: Push update to target branch
+      run: |
+        # get branch name
+        current_branch=${GITHUB_REF#refs/heads/}
+        # push update
+        git checkout main
+        git merge --no-ff origin/$current_branch -m "Auto-merge from $current_branch"
+        git push
