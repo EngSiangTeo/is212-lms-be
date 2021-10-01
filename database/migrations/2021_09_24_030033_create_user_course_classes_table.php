@@ -14,7 +14,6 @@ class CreateUserCourseClassesTable extends Migration
     public function up()
     {
         Schema::create('user_course_classes', function (Blueprint $table) {
-            $table->id();
             $table->foreignId('user_id');
             $table->foreignId('course_id');
             $table->foreignId('class_id');
