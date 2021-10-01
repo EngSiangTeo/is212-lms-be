@@ -16,5 +16,4 @@ class LearnerTransformer extends TransformerAbstract
 
         return $learnerArray;
     }
-
 }

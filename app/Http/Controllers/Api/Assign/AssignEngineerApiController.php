@@ -29,8 +29,7 @@ class AssignEngineerApiController extends ApiController
             $learners = User::where(['role' => 'learner'])->get();
 
             $availableStudents = $learners->diff($enrolledLearners);
-
-        }else {
+        } else {
             $requiredCourseId = $selectedCourse->requirements->pluck('id');
 
             $clearedStudents = $userCourseClass->getLearnersWithRequirement($requiredCourseId);
@@ -43,6 +42,5 @@ class AssignEngineerApiController extends ApiController
                                     ->toArray();
 
         return $this->respondSuccess($payload, 'successfully retrieved learners');
-        
     }
 }

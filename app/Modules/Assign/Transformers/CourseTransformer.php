@@ -15,5 +15,4 @@ class CourseTransformer extends TransformerAbstract
 
         return $courseArray;
     }
-
 }
