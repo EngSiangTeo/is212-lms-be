@@ -21,3 +21,7 @@ use Illuminate\Support\Facades\Route;
 Route::namespace('Account')->name('account.')->group(function () {
     Route::post('/loginByEmail', 'LoginApiController@loginByEmail')->name('login_by_email');
 });
+
+Route::namespace('Assign')->name('assign.')->group(function () {
+    Route::get('/getLearners/{classId}', 'AssignEngineerApiController@getEnrollableLearners')->name('get_enrollable_learners');
+});
