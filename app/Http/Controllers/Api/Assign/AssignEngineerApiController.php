@@ -41,6 +41,35 @@ class AssignEngineerApiController extends ApiController
                                     ->serializeWith(new ArraySerializer())
                                     ->toArray();
 
-        return $this->respondSuccess($payload, 'successfully retrieved learners');
+        return $this->respondSuccess($payload, 'Successfully retrieved learners');
+    }
+
+    public function enrollLearners($classId, $userId)
+    {
+        $selectedCourse = CourseClass::find($classId)->course;
+
+        $userCourseClass = new UserCourseClass();
+        #check if user already enrolled
+        if ($userCourseClass->checkIfUserEnrollInCourse($userId, $selectedCourse->id)) {
+            return $this->respondError('User already enrolled in similar course', 406);
+        }
+
+        #check if user meet requirement
+        if (!$selectedCourse->requirements->isEmpty()) {
+            $requiredCourseId = $selectedCourse->requirements->pluck('id');
+            if (!$userCourseClass->checkIfLearnerMetRequirement($userId, $requiredCourseId)) {
+                return $this->respondError('User does not meet this course requirement', 406);
+            }
+        }
+
+        #create new user course class
+        $userCourseClass = UserCourseClass::Create([
+            "user_id" => $userId,
+            "course_id" => $selectedCourse->id,
+            "class_id" => $classId,
+            "status" => "Enrolled"
+        ]);
+
+        return $this->respondCreated($userCourseClass, 'Successfully enrolled leaners');
     }
 }
