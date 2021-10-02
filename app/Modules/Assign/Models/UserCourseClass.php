@@ -49,4 +49,18 @@ class UserCourseClass extends Model
                    ->get()
                    ->pluck('user');
     }
+
+    public function checkIfUserEnrollInClass($userId, $classId)
+    {
+        return $this->where(['user_id' => $userId,
+                             'class_id' => $classId
+                            ])
+                    ->exists();
+    }
+
+    public function withdrawLearner($userId, $classId)
+    {
+        return $this->where(['user_id'=>$userId, 'class_id'=>$classId])
+                    ->delete();
+    }
 }

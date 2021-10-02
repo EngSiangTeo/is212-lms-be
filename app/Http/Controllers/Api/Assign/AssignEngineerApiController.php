@@ -43,4 +43,18 @@ class AssignEngineerApiController extends ApiController
 
         return $this->respondSuccess($payload, 'successfully retrieved learners');
     }
+
+    public function withdrawLearnerFromClass($classId, $userId)
+    {
+        $userCourseClass = new UserCourseClass();
+
+        if ($userCourseClass->checkIfUserEnrollInClass($userId, $classId)) {
+            $payload['user_id'] = $userId;
+            $payload['class_id'] = $classId;
+            $userCourseClass->withdrawLearner($userId, $classId);
+            return $this->respondSuccess($payload, 'Sucessfully withdrew learner');
+        } else {
+            return $this->respondNotFound('Record does not exist');
+        }
+    }
 }
