@@ -54,6 +54,11 @@ class UserCourseClass extends Model
     {
         return $this->where(['user_id' => $userId,
                              'class_id' => $classId
+
+    public function checkIfUserEnrollInCourse($userId, $courseId)
+    {
+        return $this->where(['user_id' => $userId,
+                             'course_id' => $courseId
                             ])
                     ->exists();
     }
@@ -62,5 +67,13 @@ class UserCourseClass extends Model
     {
         return $this->where(['user_id'=>$userId, 'class_id'=>$classId])
                     ->delete();
+
+    public function checkIfLearnerMetRequirement($userId, $requiredCourseId)
+    {
+        $numberOfRequiredCourseCompleted = $this->where(['user_id' => $userId, 'status' => 'Completed'])
+                                                ->whereIn('course_id', $requiredCourseId)
+                                                ->count();
+
+        return $numberOfRequiredCourseCompleted == count($requiredCourseId);
     }
 }
