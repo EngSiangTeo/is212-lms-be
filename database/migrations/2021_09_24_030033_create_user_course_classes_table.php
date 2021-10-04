@@ -22,6 +22,7 @@ class CreateUserCourseClassesTable extends Migration
             $table->foreign('class_id')->references('id')->on('classes');
             $table->string('status');
             $table->timestamps();
+            $table->primary(array('user_id', 'course_id','class_id'));
         });
     }
 
