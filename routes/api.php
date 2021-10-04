@@ -24,5 +24,6 @@ Route::namespace('Account')->name('account.')->group(function () {
 
 Route::namespace('Assign')->name('assign.')->group(function () {
     Route::get('/getLearners/{classId}', 'AssignEngineerApiController@getEnrollableLearners')->name('get_enrollable_learners');
+    Route::post('/withdrawLearner/{classId}/{userId}', 'AssignEngineerApiController@withdrawLearnerFromClass')->name('enroll_learner');
     Route::post('/enrollLearners/{classId}/{userId}', 'AssignEngineerApiController@enrollLearners')->name('enroll_learner');
 });

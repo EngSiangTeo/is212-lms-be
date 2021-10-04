@@ -16,47 +16,57 @@ class UserCourseClass extends Model
      */
     protected $guarded = [];
 
-    public function user()
-    {
-        return $this->belongsTo(User::class, 'user_id');
-    }
+public function user()
+{
+    return $this->belongsTo(User::class, 'user_id');
+}
 
-    public function course()
-    {
-        return $this->belongsTo(Course::class, 'course_id');
-    }
+public function course()
+{
+    return $this->belongsTo(Course::class, 'course_id');
+}
 
-    public function class()
-    {
-        return $this->belongsTo(CourseClass::class, 'class_id');
-    }
+public function class()
+{
+    return $this->belongsTo(CourseClass::class, 'class_id');
+}
 
-    public function getEnrolledUsers($courseId)
-    {
-        return $this->with('user')
-                    ->where('course_id', '=', $courseId)
-                    ->get()
-                    ->pluck('user');
-    }
+public function getEnrolledUsers($courseId)
+{
+    return $this->with('user')
+                ->where('course_id', '=', $courseId)
+                ->get()
+                ->pluck('user');
+}
 
-    public function getLearnersWithRequirement($requiredCourseId)
-    {
-        return $this->with('user')
-                   ->where(['status' => 'Completed'])
-                   ->whereIn('course_id', $requiredCourseId)
-                   ->groupBy('user_id')
-                   ->having(DB::raw('count(*)'), '=', count($requiredCourseId))
-                   ->get()
-                   ->pluck('user');
-    }
+public function getLearnersWithRequirement($requiredCourseId)
+{
+    return $this->with('user')
+               ->where(['status' => 'Completed'])
+               ->whereIn('course_id', $requiredCourseId)
+               ->groupBy('user_id')
+               ->having(DB::raw('count(*)'), '=', count($requiredCourseId))
+               ->get()
+               ->pluck('user');
+}
 
-    public function checkIfUserEnrollInCourse($userId, $courseId)
+public function checkIfUserEnrollInClass($userId, $classId)
     {
         return $this->where(['user_id' => $userId,
-                             'course_id' => $courseId
-                            ])
-                    ->exists();
-    }
+                             'class_id' => $classId
+
+public function checkIfUserEnrollInCourse($userId, $courseId)
+{
+    return $this->where(['user_id' => $userId,
+                         'course_id' => $courseId
+                        ])
+                ->exists();
+}
+
+public function withdrawLearner($userId, $classId)
+{
+    return $this->where(['user_id'=>$userId, 'class_id'=>$classId])
+                ->delete();
 
     public function checkIfLearnerMetRequirement($userId, $requiredCourseId)
     {
