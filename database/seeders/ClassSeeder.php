@@ -22,14 +22,24 @@ class ClassSeeder extends Seeder
         $records = $csv->getRecords();
 
         foreach ($records as $record) {
-            CourseClass::firstOrCreate([
-                'course_id'=>$record['course_id'],
-                'trainer_id'=>$record['trainer_id'],
-                'start_time'=>$record['start_time'],
-                'end_time'=>$record['end_time'],
-                'start_date'=>Carbon::createFromFormat('d/m/Y', $record['start_date'])->toDateString(),
-                'end_date'=>Carbon::createFromFormat('d/m/Y', $record['end_date'])->toDateString()
-            ]);
+            if ($record['trainer_id'] == "null") {
+                CourseClass::firstOrCreate([
+                    'course_id'=>$record['course_id'],
+                    'start_time'=>$record['start_time'],
+                    'end_time'=>$record['end_time'],
+                    'start_date'=>Carbon::createFromFormat('d/m/Y', $record['start_date'])->toDateString(),
+                    'end_date'=>Carbon::createFromFormat('d/m/Y', $record['end_date'])->toDateString()
+                ]);
+            } else {
+                CourseClass::firstOrCreate([
+                    'course_id'=>$record['course_id'],
+                    'trainer_id'=>$record['trainer_id'],
+                    'start_time'=>$record['start_time'],
+                    'end_time'=>$record['end_time'],
+                    'start_date'=>Carbon::createFromFormat('d/m/Y', $record['start_date'])->toDateString(),
+                    'end_date'=>Carbon::createFromFormat('d/m/Y', $record['end_date'])->toDateString()
+                ]);
+            }
         }
     }
 }

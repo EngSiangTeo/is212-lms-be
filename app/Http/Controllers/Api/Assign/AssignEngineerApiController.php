@@ -12,6 +12,7 @@ use App\Http\Controllers\Api\ApiController;
 use App\Modules\Assign\Models\UserCourseClass;
 use App\Modules\Assign\Transformers\CourseTransformer;
 use App\Modules\Assign\Transformers\LearnerTransformer;
+use App\Modules\Assign\Transformers\CourseClassTransformer;
 
 /**
 * @group Assign endpoints
@@ -89,16 +90,18 @@ class AssignEngineerApiController extends ApiController
 
     public function getEnrolledUsersInClass($classid)
     {
-        $enrolledLearners = CourseClass::with('enrolled.user')
+        $enrolledLearners = CourseClass::with('enrolled.user', 'course')
                                          ->where(['id' => $classid])
                                          ->first();
-
+        $enrolledLearners = Fractal($enrolledLearners, new CourseClassTransformer())
+                                    ->serializeWith(new ArraySerializer())
+                                    ->toArray();
         return $this->respondSuccess($enrolledLearners, 'Successfully retrieved enrolled learners');
     }
 
     public function getListOfAllClaases()
     {
-        $classes = Course::with('classes')
+        $classes = Course::with('classes', 'classes.trainer')
                            ->get();
 
         return $this->respondSuccess($classes, 'Successfully retrieved classes');
