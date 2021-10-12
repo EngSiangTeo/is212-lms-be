@@ -27,4 +27,5 @@ Route::namespace('Assign')->name('assign.')->group(function () {
     Route::post('/withdrawLearner/{classId}/{userId}', 'AssignEngineerApiController@withdrawLearnerFromClass')->name('enroll_learner');
     Route::post('/enrollLearners/{classId}/{userId}', 'AssignEngineerApiController@enrollLearners')->name('enroll_learner');
     Route::get('/getEnrolledUser/{classId}', 'AssignEngineerApiController@getEnrolledUsersInClass')->name('get_enrolled_user');
+    Route::get('/getAllClasses', 'AssignEngineerApiController@getListOfAllClaases')->name('get_all_classes');
 });

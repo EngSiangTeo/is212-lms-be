@@ -95,4 +95,12 @@ class AssignEngineerApiController extends ApiController
 
         return $this->respondSuccess($enrolledLearners, 'Successfully retrieved enrolled learners');
     }
+
+    public function getListOfAllClaases()
+    {
+        $classes = Course::with('classes')
+                           ->get();
+
+        return $this->respondSuccess($classes, 'Successfully retrieved classes');
+    }
 }
