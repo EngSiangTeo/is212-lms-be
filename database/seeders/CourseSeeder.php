@@ -22,7 +22,8 @@ class CourseSeeder extends Seeder
 
         foreach ($records as $record) {
             Course::firstOrCreate([
-                'name'=>$record['name']
+                'name'=>$record['name'],
+                'description'=>$record['description']
             ]);
         }
     }
