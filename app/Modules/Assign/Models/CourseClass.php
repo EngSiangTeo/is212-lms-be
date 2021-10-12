@@ -3,6 +3,7 @@
 namespace App\Modules\Assign\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use App\Modules\Account\User\Models\User;
 
 class CourseClass extends Model
 {
@@ -30,5 +31,10 @@ class CourseClass extends Model
     public function enrolled()
     {
         return $this->hasMany(userCourseClass::class, 'class_id', 'id');
+    }
+
+    public function trainer()
+    {
+        return $this->belongsTo(User::class, 'trainer_id');
     }
 }
