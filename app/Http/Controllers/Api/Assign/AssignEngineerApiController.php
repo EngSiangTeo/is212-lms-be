@@ -88,22 +88,36 @@ class AssignEngineerApiController extends ApiController
         }
     }
 
-    public function getEnrolledUsersInClass($classid)
+    public function getEnrolledUsersInClass($classId)
     {
         $enrolledLearners = CourseClass::with('enrolled.user', 'course')
-                                         ->where(['id' => $classid])
-                                         ->first();
+                                         ->find($classId);
+
         $enrolledLearners = Fractal($enrolledLearners, new CourseClassTransformer())
                                     ->serializeWith(new ArraySerializer())
                                     ->toArray();
         return $this->respondSuccess($enrolledLearners, 'Successfully retrieved enrolled learners');
     }
 
-    public function getListOfAllClaases()
+    public function getListOfAllClasses()
     {
         $classes = Course::with('classes', 'classes.trainer')
                            ->get();
 
         return $this->respondSuccess($classes, 'Successfully retrieved classes');
+    }
+
+    public function setClassTrainer($classId, $userId)
+    {
+        $user = User::find($userId);
+
+        if ($user->role != "Trainer") {
+            return $this->respondError('User is not a trainer', 406);
+        }
+
+        $class = CourseClass::find($classId);
+        $class->trainer_id = $userId;
+        $class->save();
+        return $this->respondSuccess($class->fresh(), 'Successfully assigned trainer');
     }
 }
