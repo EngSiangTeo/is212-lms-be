@@ -80,5 +80,4 @@ class UserCourseClass extends Model
 
         return $numberOfRequiredCourseCompleted == count($requiredCourseId);
     }
-
 }
