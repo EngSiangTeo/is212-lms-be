@@ -22,4 +22,9 @@ class Course extends Model
     {
         return $this->belongsToMany(Course::class, 'course_requirements', 'course_id', 'require_course_id');
     }
+
+    public function classes()
+    {
+        return $this->hasMany(CourseClass::class, 'course_id', 'id');
+    }
 }

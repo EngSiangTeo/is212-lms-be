@@ -86,4 +86,13 @@ class AssignEngineerApiController extends ApiController
             return $this->respondNotFound('Record does not exist');
         }
     }
+
+    public function getEnrolledUsersInClass($classid)
+    {
+        $enrolledLearners = CourseClass::with('enrolled.user')
+                                         ->where(['id' => $classid])
+                                         ->first();
+
+        return $this->respondSuccess($enrolledLearners, 'Successfully retrieved enrolled learners');
+    }
 }
