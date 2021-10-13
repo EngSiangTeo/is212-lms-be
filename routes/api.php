@@ -30,3 +30,7 @@ Route::namespace('Assign')->name('assign.')->group(function () {
     Route::get('/getAllClasses', 'AssignEngineerApiController@getListOfAllClasses')->name('get_all_classes');
     Route::post('/assignTrainer/{classId}/{userId}', 'AssignEngineerApiController@setClassTrainer')->name('assign_trainer');
 });
+
+Route::namespace('SelfEnroll')->name('selfenroll.')->group(function () {
+    Route::get('/getAvailableClasses/{userId}', 'SelfEnrollApiController@getListOfAvailableClasses')->name('get_available_classes');
+});
