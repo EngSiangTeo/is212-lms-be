@@ -10,7 +10,6 @@ use App\Modules\Account\User\Models\User;
 use App\Modules\Assign\Models\CourseClass;
 use App\Http\Controllers\Api\ApiController;
 use App\Modules\Assign\Models\UserCourseClass;
-use App\Modules\Assign\Transformers\CourseTransformer;
 use App\Modules\Assign\Transformers\LearnerTransformer;
 use App\Modules\Assign\Transformers\CourseClassTransformer;
 
