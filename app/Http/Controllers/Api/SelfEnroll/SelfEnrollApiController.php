@@ -60,4 +60,33 @@ class SelfEnrollApiController extends ApiController
 
         return $this->respondSuccess($courses, 'Successfully retrieved classes');
     }
+
+    public function applyToClass($classId, $userId)
+    {
+        $selectedCourse = CourseClass::find($classId)->course;
+
+        $userCourseClass = new UserCourseClass();
+        #check if user already enrolled
+        if ($userCourseClass->checkIfUserEnrollInCourse($userId, $selectedCourse->id)) {
+            return $this->respondError('You already enrolled in similar course', 406);
+        }
+
+        #check if user meet requirement
+        if (!$selectedCourse->requirements->isEmpty()) {
+            $requiredCourseId = $selectedCourse->requirements->pluck('id');
+            if (!$userCourseClass->checkIfLearnerMetRequirement($userId, $requiredCourseId)) {
+                return $this->respondError('You does not meet this course requirement', 406);
+            }
+        }
+
+        #create new user course class
+        $userCourseClass = UserCourseClass::Create([
+            "user_id" => $userId,
+            "course_id" => $selectedCourse->id,
+            "class_id" => $classId,
+            "status" => "Applied"
+        ]);
+
+        return $this->respondCreated($userCourseClass, 'Successfully applied for class');
+    }
 }

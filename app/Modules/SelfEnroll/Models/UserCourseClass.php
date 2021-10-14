@@ -30,4 +30,21 @@ class UserCourseClass extends Model
     {
         return $this->belongsTo(CourseClass::class, 'class_id');
     }
+
+    public function checkIfUserEnrollInCourse($userId, $courseId)
+    {
+        return $this->where(['user_id' => $userId,
+                             'course_id' => $courseId
+                            ])
+                    ->exists();
+    }
+
+    public function checkIfLearnerMetRequirement($userId, $requiredCourseId)
+    {
+        $numberOfRequiredCourseCompleted = $this->where(['user_id' => $userId, 'status' => 'Completed'])
+                                                ->whereIn('course_id', $requiredCourseId)
+                                                ->count();
+
+        return $numberOfRequiredCourseCompleted == count($requiredCourseId);
+    }
 }
