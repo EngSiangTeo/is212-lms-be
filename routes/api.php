@@ -33,4 +33,5 @@ Route::namespace('Assign')->name('assign.')->group(function () {
 
 Route::namespace('SelfEnroll')->name('selfenroll.')->group(function () {
     Route::get('/getAvailableClasses/{userId}', 'SelfEnrollApiController@getListOfAvailableClasses')->name('get_available_classes');
+    Route::post('/applyToClass/{classId}/{userId}', 'SelfEnrollApiController@applyToClass')->name('apply_to_class');
 });
