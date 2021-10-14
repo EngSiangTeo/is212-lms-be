@@ -1,0 +1,11 @@
+user_id,course_id,class_id,status
+9,1,1,Completed
+9,2,3,Completed
+9,3,4,Completed
+8,1,2,Completed
+7,1,2,Enrolled
+7,2,3,Applied
+6,1,1,Completed
+6,2,3,Completed
+6,3,4,Completed
+6,4,5,Enrolled

@@ -1,0 +1,10 @@
+name,email,password,role
+HR,hr@onestop.com,password123,Hr
+S Engineer,se1@onestop.com,password123,Trainer
+S Engineer,se2@onestop.com,password123,Trainer
+J Engineer,je1@onestop.com,password123,Learner
+J Engineer,je2@onestop.com,password123,Learner
+J Engineer,je3@onestop.com,password123,Learner
+J Engineer,je4@onestop.com,password123,Learner
+J Engineer,je5@onestop.com,password123,Learner
+J Engineer,je6@onestop.com,password123,Learner
