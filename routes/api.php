@@ -34,3 +34,7 @@ Route::namespace('Assign')->name('assign.')->group(function () {
 Route::namespace('SelfEnroll')->name('selfenroll.')->group(function () {
     Route::get('/getAvailableClasses/{userId}', 'SelfEnrollApiController@getListOfAvailableClasses')->name('get_available_classes');
 });
+
+Route::namespace('Learn')->name('learn.')->group(function () {
+    Route::get('/takeCourse/{userId}/{classId}', 'TakeCourseApiController@viewCourseMaterial')->name('take_course');
+});
