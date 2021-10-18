@@ -40,3 +40,7 @@ Route::namespace('Quiz')->name('quiz.')->group(function () {
     Route::post('/createQuiz/{sectionId}', 'QuizApiController@createQuizForSection')->name('create_quiz');
     Route::post('/createQuestion/{sectionId}', 'QuizApiController@createQuestionForSection')->name('create_quiz_question');
 });
+
+Route::namespace('Learn')->name('learn.')->group(function () {
+    Route::get('/takeCourse/{userId}/{classId}', 'TakeCourseApiController@viewCourseMaterial')->name('take_course');
+});
