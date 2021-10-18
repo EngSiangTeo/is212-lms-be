@@ -38,4 +38,5 @@ Route::namespace('SelfEnroll')->name('selfenroll.')->group(function () {
 
 Route::namespace('Quiz')->name('quiz.')->group(function () {
     Route::post('/createQuiz/{sectionId}', 'QuizApiController@createQuizForSection')->name('create_quiz');
+    Route::post('/createQuestion/{sectionId}', 'QuizApiController@createQuestionForSection')->name('create_quiz_question');
 });

@@ -17,7 +17,7 @@ class CreateQuestionsTable extends Migration
             $table->id();
             $table->string('questions');
             $table->json('options');
-            $table->integer('answer');
+            $table->string('answer');
             $table->foreignId('quiz_id');
             $table->foreign('quiz_id')->references('id')->on('quizzes');
             $table->timestamps();
