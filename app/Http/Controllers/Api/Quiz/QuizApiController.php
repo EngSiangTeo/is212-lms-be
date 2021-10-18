@@ -4,8 +4,9 @@ namespace App\Http\Controllers\Api\Quiz;
 
 use Spatie\Fractal\Fractal;
 use Illuminate\Http\Request;
-use App\Modules\Quiz\Models\Section;
 use App\Modules\Quiz\Models\Quiz;
+use App\Modules\Quiz\Models\Section;
+use App\Modules\Quiz\Models\Question;
 use Spatie\Fractalistic\ArraySerializer;
 use App\Modules\Account\User\Models\User;
 use App\Http\Controllers\Api\ApiController;
@@ -33,5 +34,27 @@ class QuizApiController extends ApiController
         ]);
 
         return $this->respondSuccess($quiz, 'Successfully created quiz');
+    }
+
+    public function createQuestionForSection($sectionId, Request $request)
+    {
+        $section = Section::find($sectionId);
+
+        if (!$section->quiz) {
+            return $this->respondError('Quiz not created for section yet', 406);
+        }
+
+        $questions = $request['questions'];
+
+        foreach ($questions as $question) {
+            Question::create([
+                "questions" => $question['questions'],
+                "options" =>json_encode($question['options']),
+                "answer" => $question['answer'],
+                "quiz_id" => $section->quiz->id
+            ]);
+        }
+
+        return $this->respondSuccess($questions, 'Successfully created quiz');
     }
 }
