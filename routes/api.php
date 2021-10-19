@@ -43,6 +43,7 @@ Route::namespace('Quiz')->name('quiz.')->group(function () {
 
 Route::namespace('Learn')->name('learn.')->group(function () {
     Route::get('/takeCourse/{userId}/{classId}', 'TakeCourseApiController@viewCourseMaterial')->name('take_course');
-    Route::post('/takeQuiz/{userId}/{sectionId}', 'TakeCourseApiController@takeQuizAssessment')->name('take_course');
-    Route::get('/viewQuizScore/{userId}/{attemptId}', 'TakeCourseApiController@viewQuizScoreAndAnswer')->name('take_course');
+    Route::post('/takeQuiz/{userId}/{sectionId}', 'TakeCourseApiController@takeQuizAssessment')->name('take_quiz');
+    Route::get('/viewQuizScore/{userId}/{attemptId}', 'TakeCourseApiController@viewQuizScoreAndAnswer')->name('view_quiz_score');
+    Route::get('/viewQuiz/{userId}/{sectionId}', 'TakeCourseApiController@viewQuizQuestions')->name('view_quiz');
 });
