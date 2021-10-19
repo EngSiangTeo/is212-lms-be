@@ -110,4 +110,27 @@ class TakeCourseApiController extends ApiController
 
         return $this->respondSuccess($quiz, 'Successfully retrieved quiz questions');
     }
+
+    public function viewQuizAttempts($userId, $sectionId)
+    {
+        $section = Section::find($sectionId);
+
+        if (!$section->quiz) {
+            return $this->respondError('Quiz not found', 404);
+        }
+
+        $userCourseClass = new UserCourseClass();
+        if (!$userCourseClass->checkIfUserEnrollInClass($userId, $section->class_id)) {
+            return $this->respondError('You do not have permission to view this course', 403);
+        }
+
+        $attempts = UserQuiz::with('quiz')
+                            ->where([
+                                'user_id' => $userId,
+                                'quiz_id' => $section->quiz->id
+                            ])
+                            ->get();
+
+        return $this->respondSuccess($attempts, 'Successfully retrieved quiz attempts');
+    }
 }
