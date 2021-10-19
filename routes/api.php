@@ -43,4 +43,5 @@ Route::namespace('Quiz')->name('quiz.')->group(function () {
 
 Route::namespace('Learn')->name('learn.')->group(function () {
     Route::get('/takeCourse/{userId}/{classId}', 'TakeCourseApiController@viewCourseMaterial')->name('take_course');
+    Route::post('/takeQuiz/{userId}/{sectionId}', 'TakeCourseApiController@takeQuizAssessment')->name('take_course');
 });
