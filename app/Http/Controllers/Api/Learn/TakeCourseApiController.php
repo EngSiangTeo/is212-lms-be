@@ -65,4 +65,28 @@ class TakeCourseApiController extends ApiController
 
         return $this->respondSuccess($userQuiz, 'Successfully submitted quiz');
     }
+
+    public function viewQuizScoreAndAnswer($userId, $attemptId)
+    {
+        $userAttempt = UserQuiz::find($attemptId);
+
+        if (!$userAttempt) {
+            return $this->respondError('Quiz attempt not found', 404);
+        }
+
+        if ($userId != $userAttempt->user_id) {
+            return $this->respondError('You do not have permission to view this', 403);
+        }
+
+        if ($userAttempt->quiz->type != "Ungraded") {
+            return $this->respondError('You do not have permission to view this', 403);
+        }
+
+        $payload['userAnswers'] = json_decode($userAttempt->answers);
+        $payload['answers'] = $userAttempt->quiz->question->pluck('answer');
+        $payload['score'] = $userAttempt->score;
+        $payload['total'] = count($userAttempt->quiz->question);
+
+        return $this->respondSuccess($payload, 'Successfully retrieved quiz attempt');
+    }
 }

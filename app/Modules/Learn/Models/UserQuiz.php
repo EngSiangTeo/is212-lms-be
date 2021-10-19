@@ -12,4 +12,9 @@ class UserQuiz extends Model
      * @var array
      */
     protected $guarded = [];
+
+    public function quiz()
+    {
+        return $this->belongsTo(Quiz::class, 'quiz_id');
+    }
 }
