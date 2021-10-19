@@ -15,4 +15,9 @@ class Section extends Model
     {
         return $this->hasMany(Material::class, 'section_id', 'id');
     }
+
+    public function quiz()
+    {
+        return $this->hasOne(Quiz::class, 'section_id', 'id');
+    }
 }
