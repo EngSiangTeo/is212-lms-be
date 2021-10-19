@@ -13,6 +13,7 @@ use App\Modules\Learn\Models\CourseClass;
 use App\Modules\Account\User\Models\User;
 use App\Http\Controllers\Api\ApiController;
 use App\Modules\Learn\Models\UserCourseClass;
+use App\Modules\Learn\Transformers\ViewQuizTransformer;
 use App\Modules\Learn\Transformers\TakeClassTransformer;
 
 /**
@@ -88,5 +89,25 @@ class TakeCourseApiController extends ApiController
         $payload['total'] = count($userAttempt->quiz->question);
 
         return $this->respondSuccess($payload, 'Successfully retrieved quiz attempt');
+    }
+
+    public function viewQuizQuestions($userId, $sectionId)
+    {
+        $section = Section::find($sectionId);
+
+        if (!$section->quiz) {
+            return $this->respondError('Quiz not found', 404);
+        }
+
+        $userCourseClass = new UserCourseClass();
+        if (!$userCourseClass->checkIfUserEnrollInClass($userId, $section->class_id)) {
+            return $this->respondError('You do not have permission to view this course', 403);
+        }
+
+        $quiz = Fractal($section->quiz, new ViewQuizTransformer())
+                        ->serializeWith(new ArraySerializer())
+                        ->toArray();
+
+        return $this->respondSuccess($quiz, 'Successfully retrieved quiz questions');
     }
 }
