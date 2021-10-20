@@ -25,7 +25,7 @@ class CourseClassTest extends TestCase
     {
         $courseRequirements = CourseClass::find($this->classId)->course->requirements->pluck('id')->toArray();
 
-        $this->assertTrue($courseRequirements == [1,]);
+        $this->assertEquals($courseRequirements, [1,]);
     }
 
     public function test_class_do_not_have_requirement()
