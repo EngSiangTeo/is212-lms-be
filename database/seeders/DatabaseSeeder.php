@@ -21,7 +21,9 @@ class DatabaseSeeder extends Seeder
             ClassSeeder::class,
             UserCourseClassSeeder::class,
             SectionSeeder::class,
-            CourseMaterialSeeder::class
+            CourseMaterialSeeder::class,
+            QuizSeeder::class,
+            QuestionSeeder::class
         ]);
     }
 }
