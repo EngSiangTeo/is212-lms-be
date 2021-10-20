@@ -47,4 +47,20 @@ class UserCourseClass extends Model
 
         return $numberOfRequiredCourseCompleted == count($requiredCourseId);
     }
+
+    public function retrieveUserEnrolledCourse($userId)
+    {
+        return $this->where(['user_id' => $userId])
+                    ->get()
+                    ->pluck('course_id')
+                    ->toArray();
+    }
+
+    public function retrieveUserCompletedCourse($userId)
+    {
+        return $this->where(['user_id' => $userId, 'status' => 'Completed'])
+                    ->get()
+                    ->pluck('course_id')
+                    ->toArray();
+    }
 }

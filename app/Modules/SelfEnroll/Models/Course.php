@@ -12,12 +12,7 @@ class Course extends Model
      * @var array
      */
     protected $guarded = [];
-
-    public function enrolled()
-    {
-        return $this->hasMany(userCourseClass::class, 'course_id', 'id');
-    }
-
+    
     public function requirements()
     {
         return $this->belongsToMany(Course::class, 'course_requirements', 'course_id', 'require_course_id');
@@ -26,5 +21,13 @@ class Course extends Model
     public function classes()
     {
         return $this->hasMany(CourseClass::class, 'course_id', 'id');
+    }
+
+    public function retrieveCourseRequirements()
+    {
+        return $this->with('requirements')
+                    ->get()
+                    ->pluck('requirements.*.id', 'id')
+                    ->toArray();
     }
 }

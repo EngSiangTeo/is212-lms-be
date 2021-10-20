@@ -22,20 +22,15 @@ class SelfEnrollApiController extends ApiController
         $courses = Course::with('classes', 'classes.trainer')
                            ->get();
 
-        $enrolledCourseId = UserCourseClass::where(['user_id' => $userId])
-                                           ->get()
-                                           ->pluck('course_id')
-                                           ->toArray();
+        $userCourseClass = new UserCourseClass();
 
-        $completedCourseId = UserCourseClass::where(['user_id' => $userId, 'status' => 'Completed'])
-                                           ->get()
-                                           ->pluck('course_id')
-                                           ->toArray();
+        $enrolledCourseId = $userCourseClass->retrieveUserEnrolledCourse($userId);
 
-        $courseRequirements = Course::with('requirements')
-                                      ->get()
-                                      ->pluck('requirements.*.id', 'id')
-                                      ->toArray();
+        $completedCourseId = $userCourseClass->retrieveUserCompletedCourse($userId);
+
+        $course = new Course();
+
+        $courseRequirements = $course->retrieveCourseRequirements();
 
         foreach ($courses as $course) {
             $courseId = $course->id;
