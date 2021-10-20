@@ -121,7 +121,7 @@ class TakeCourseApiController extends ApiController
             return $this->respondError('You do not have permission to view this course', 403);
         }
 
-        $userQuiz = new UserQuiz(); 
+        $userQuiz = new UserQuiz();
         $attempts = $userQuiz->getUserAttempts($userId, $section->quiz->id);
 
         return $this->respondSuccess($attempts, 'Successfully retrieved quiz attempts');
