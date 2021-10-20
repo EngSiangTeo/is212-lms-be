@@ -49,22 +49,19 @@ class TakeCourseApiController extends ApiController
 
         $userAnswers = $request['answers'];
         $userScore = 0;
-        $question = $section->quiz->question;
+        $questionAnswer = $section->quiz->question->pluck('answer')->toArray();
+        
+        $userQuiz = new UserQuiz();
+        $userScore = $userQuiz->calculateScore($questionAnswer, $userAnswers);
 
-        for ($i = 0; $i < count($question); $i++) {
-            if ($question[$i]->answer == $userAnswers[$i]) {
-                $userScore += 1;
-            }
-        }
-
-        $userQuiz = UserQuiz::Create([
+        $userAttempt = UserQuiz::Create([
             "user_id" => $userId,
             "quiz_id" => $section->quiz->id,
             "score" => $userScore,
             "answers" => json_encode($userAnswers)
         ]);
 
-        return $this->respondSuccess($userQuiz, 'Successfully submitted quiz');
+        return $this->respondSuccess($userAttempt, 'Successfully submitted quiz');
     }
 
     public function viewQuizScoreAndAnswer($userId, $attemptId)
@@ -124,12 +121,8 @@ class TakeCourseApiController extends ApiController
             return $this->respondError('You do not have permission to view this course', 403);
         }
 
-        $attempts = UserQuiz::with('quiz')
-                            ->where([
-                                'user_id' => $userId,
-                                'quiz_id' => $section->quiz->id
-                            ])
-                            ->get();
+        $userQuiz = new UserQuiz(); 
+        $attempts = $userQuiz->getUserAttempts($userId, $section->quiz->id);
 
         return $this->respondSuccess($attempts, 'Successfully retrieved quiz attempts');
     }
