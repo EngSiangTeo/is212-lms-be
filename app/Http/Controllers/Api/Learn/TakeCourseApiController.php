@@ -80,8 +80,9 @@ class TakeCourseApiController extends ApiController
             return $this->respondError('You do not have permission to view this', 403);
         }
 
-        $payload['userAnswers'] = json_decode($userAttempt->answers);
-        $payload['answers'] = $userAttempt->quiz->question->pluck('answer');
+        $payload['section'] = $userAttempt->quiz->section;
+        $payload['answers'] = json_decode($userAttempt->answers);
+        $payload['questions'] = $userAttempt->quiz->question;
         $payload['score'] = $userAttempt->score;
         $payload['total'] = count($userAttempt->quiz->question);
 
