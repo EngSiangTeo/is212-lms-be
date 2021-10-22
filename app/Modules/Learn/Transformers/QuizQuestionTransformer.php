@@ -11,7 +11,7 @@ class QuizQuestionTransformer extends TransformerAbstract
         $questionArray = [
             'question_id' => $question->id,
             'question_name' => $question->questions,
-            'options' => json_decode($question->options)
+            'options' => $question->options
         ];
 
         return $questionArray;
