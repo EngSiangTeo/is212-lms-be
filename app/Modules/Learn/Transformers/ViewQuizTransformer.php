@@ -13,7 +13,8 @@ class ViewQuizTransformer extends TransformerAbstract
         $quizArray = [
             'quiz_id' => $quiz->id,
             'quiz_duration' => $quiz->duration,
-            'quiz_type' => $quiz->type
+            'quiz_type' => $quiz->type,
+            'section' => $quiz->section
         ];
 
         return $quizArray;
