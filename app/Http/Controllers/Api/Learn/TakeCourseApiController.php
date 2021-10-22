@@ -29,7 +29,7 @@ class TakeCourseApiController extends ApiController
             return $this->respondError('You do not have permission to view this course', 403);
         }
 
-        $class = CourseClass::with('course', 'trainer', 'section', 'section.material')
+        $class = CourseClass::with('course', 'trainer', 'section', 'section.material', 'section.quiz')
                             ->find($classId);
 
         $class = Fractal($class, new TakeClassTransformer())
