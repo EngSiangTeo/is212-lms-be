@@ -27,4 +27,11 @@ class UserCourseClassTest extends TestCase
 
         $this->assertTrue($userCourseClass->checkIfUserEnrollInClass($this->userId, $this->classId));
     }
+
+    public function test_retrieve_user_enrolled_class()
+    {
+        $userCourseClass = new UserCourseClass();
+
+        $this->assertEquals($userCourseClass->getAllClassesUserEnrolled($this->userId)->first()->class_id, $this->classId);
+    }
 } 

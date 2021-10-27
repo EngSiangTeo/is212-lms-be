@@ -127,4 +127,13 @@ class TakeCourseApiController extends ApiController
 
         return $this->respondSuccess($attempts, 'Successfully retrieved quiz attempts');
     }
+
+    public function viewUserCourses($userId)
+    {
+        $userCourseClass = new UserCourseClass();
+
+        $userEnrolledClass = $userCourseClass->getAllClassesUserEnrolled($userId);
+
+        return $this->respondSuccess($userEnrolledClass, 'Successfully retrieved user enrolled classes');
+    }
 }
