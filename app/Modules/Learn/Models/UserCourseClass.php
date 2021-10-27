@@ -9,7 +9,7 @@ use App\Modules\Account\User\Models\User;
 
 class UserCourseClass extends Model
 {
-	public function course()
+    public function course()
     {
         return $this->belongsTo(Course::class, 'course_id');
     }
@@ -29,9 +29,9 @@ class UserCourseClass extends Model
 
     public function getAllClassesUserEnrolled($userId)
     {
-    	return $this->with('class','course')
-    				->where(['user_id' => $userId])
-    				->whereIn('status', ['Completed', 'Enrolled'])
-    				->get();
+        return $this->with('class', 'course')
+                    ->where(['user_id' => $userId])
+                    ->whereIn('status', ['Completed', 'Enrolled'])
+                    ->get();
     }
 }
