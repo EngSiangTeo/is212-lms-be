@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use App\Modules\Quiz\Models\Quiz;
 use App\Modules\Quiz\Models\Section;
 use App\Modules\Quiz\Models\Question;
+use App\Modules\Quiz\Models\CourseClass;
 use Spatie\Fractalistic\ArraySerializer;
 use App\Modules\Account\User\Models\User;
 use App\Http\Controllers\Api\ApiController;
@@ -56,5 +57,14 @@ class QuizApiController extends ApiController
         }
 
         return $this->respondSuccess($questions, 'Successfully created quiz');
+    }
+
+    public function viewTrainerCourse($userId)
+    {
+        $courseClass = new CourseClass();
+
+        $assignedClass = $courseClass->getAllClassesAssigned($userId);
+
+        return $this->respondSuccess($assignedClass, 'Successfully retrieved assigned classes');
     }
 }
