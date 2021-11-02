@@ -15,4 +15,21 @@ class CourseClass extends Model
      * @var string
      */
     protected $table = 'classes';
+
+    public function course()
+    {
+        return $this->belongsTo(Course::class, 'course_id');
+    }
+
+    public function section()
+    {
+        return $this->hasMany(Section::class, 'class_id', 'id');
+    }
+
+    public function getAllClassesAssigned($trainerId)
+    {
+        return $this->with('course', 'section', 'section.quiz')
+                    ->where(['trainer_id' => $trainerId])
+                    ->get();
+    }
 }
