@@ -16,6 +16,7 @@ class CreateMaterialsTable extends Migration
         Schema::create('materials', function (Blueprint $table) {
             $table->id();
             $table->string('file_name');
+            $table->string('type');
             $table->string('file_url');
             $table->foreignId('section_id');
             $table->foreign('section_id')->references('id')->on('sections');
