@@ -23,6 +23,7 @@ class CourseMaterialSeeder extends Seeder
         foreach ($records as $record) {
             Material::firstOrCreate([
                 'file_name'=>$record['file_name'],
+                'type'=>$record['type'],
                 'file_url'=>$record['file_url'],
                 'section_id'=>$record['section_id']
             ]);
