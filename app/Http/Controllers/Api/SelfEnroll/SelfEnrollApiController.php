@@ -63,7 +63,7 @@ class SelfEnrollApiController extends ApiController
         $userCourseClass = new UserCourseClass();
         #check if user already enrolled
         if ($userCourseClass->checkIfUserEnrollInCourse($userId, $selectedCourse->id)) {
-            return $this->respondError('You already enrolled in similar course', 406);
+            return $this->respondError('You already enrolled/applied in similar course', 406);
         }
 
         #check if user meet requirement
