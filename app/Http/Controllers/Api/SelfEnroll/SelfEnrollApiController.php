@@ -36,7 +36,7 @@ class SelfEnrollApiController extends ApiController
             $courseId = $course->id;
             if (in_array($courseId, $enrolledCourseId)) {
                 $course->enrollabled = false;
-                $course->reason = "You have already enrolled in the course";
+                $course->reason = "You have already enrolled/applied in the course";
             } elseif (!empty($courseRequirements[$courseId])) {
                 if (array_intersect($courseRequirements[$courseId], $completedCourseId) == $courseRequirements[$courseId]) {
                     $course->enrollabled = true;
