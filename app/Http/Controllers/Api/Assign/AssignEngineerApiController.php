@@ -133,4 +133,14 @@ class AssignEngineerApiController extends ApiController
 
         return $this->respondSuccess($class, 'Successfully retrieved trainers');
     }
+
+    public function updateUserEnroll($classId, $userId, $status)
+    {
+        $enrollRecord = UserCourseClass::where(['class_id' => $classId,
+                                                'user_id' => $userId]);
+
+        $enrollRecord->update(['status' => $status]);
+
+        return $this->respondSuccess($enrollRecord->get(), 'Successfully updated records');
+    }
 }
