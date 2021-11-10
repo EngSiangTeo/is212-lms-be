@@ -119,4 +119,18 @@ class AssignEngineerApiController extends ApiController
         $class->save();
         return $this->respondSuccess($class->fresh(), 'Successfully assigned trainer');
     }
+
+    public function getTrainerList($classId)
+    {
+        $class = CourseClass::find($classId);
+
+        $trainers = User::select('id', 'name', 'email')
+                        ->where(['role' => 'trainer'])
+                        ->where('id', "<>", $class->trainer_id)
+                        ->get();
+
+        $class->trainer_list = $trainers;
+
+        return $this->respondSuccess($class, 'Successfully retrieved trainers');
+    }
 }
