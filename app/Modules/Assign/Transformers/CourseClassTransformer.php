@@ -14,6 +14,8 @@ class CourseClassTransformer extends TransformerAbstract
             'class_id' => $class->id,
             'course_id' => $class->course->id,
             'course_name' => $class->course->name,
+            'capacity' => $class->max_capacity,
+            'current' => $class->enrolled->whereIn('status',['Enrolled','Completed'])->count()
         ];
 
         return $classArray;
