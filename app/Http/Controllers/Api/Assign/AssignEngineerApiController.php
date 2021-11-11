@@ -122,7 +122,8 @@ class AssignEngineerApiController extends ApiController
 
     public function getTrainerList($classId)
     {
-        $class = CourseClass::find($classId);
+        $class = CourseClass::with('course','trainer')
+                            ->find($classId);
 
         $trainers = User::select('id', 'name', 'email')
                         ->where(['role' => 'trainer'])
