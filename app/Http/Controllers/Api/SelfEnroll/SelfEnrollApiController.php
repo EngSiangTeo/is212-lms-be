@@ -20,12 +20,12 @@ class SelfEnrollApiController extends ApiController
 {
     public function getListOfAvailableClasses($userId)
     {
-        $courses = Course::with(['classes' => function($query){
-                                $query->where('enroll_start_date','<=',Carbon::now()->toDateTimeString())
-                                    ->where('enroll_end_date','>=',Carbon::now()->toDateTimeString());
-                           }, 'classes.trainer', 'classes.enrolled' => function($query){
-                                $query->whereIn('status',['Enrolled','Completed']);
-                           }, 'requirements'])
+        $courses = Course::with(['classes' => function ($query) {
+                                $query->where('enroll_start_date', '<=', Carbon::now()->toDateTimeString())
+                                    ->where('enroll_end_date', '>=', Carbon::now()->toDateTimeString());
+        }, 'classes.trainer', 'classes.enrolled' => function ($query) {
+             $query->whereIn('status', ['Enrolled','Completed']);
+        }, 'requirements'])
                            ->get();
 
         $userCourseClass = new UserCourseClass();
