@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Api\SelfEnroll;
 
+use Carbon\Carbon;
 use Spatie\Fractal\Fractal;
 use Illuminate\Http\Request;
 use Spatie\Fractalistic\ArraySerializer;
@@ -19,7 +20,12 @@ class SelfEnrollApiController extends ApiController
 {
     public function getListOfAvailableClasses($userId)
     {
-        $courses = Course::with('classes', 'classes.trainer')
+        $courses = Course::with(['classes' => function($query){
+                                $query->where('enroll_start_date','<=',Carbon::now()->toDateTimeString())
+                                    ->where('enroll_end_date','>=',Carbon::now()->toDateTimeString());
+                           }, 'classes.trainer', 'classes.enrolled' => function($query){
+                                $query->whereIn('status',['Enrolled','Completed']);
+                           }, 'requirements'])
                            ->get();
 
         $userCourseClass = new UserCourseClass();
@@ -36,13 +42,13 @@ class SelfEnrollApiController extends ApiController
             $courseId = $course->id;
             if (in_array($courseId, $enrolledCourseId)) {
                 $course->enrollabled = false;
-                $course->reason = "You have already enrolled/applied in the course";
+                $course->reason = "You have already enrolled/applied in the course. Please check with the HR department regarding your application.";
             } elseif (!empty($courseRequirements[$courseId])) {
                 if (array_intersect($courseRequirements[$courseId], $completedCourseId) == $courseRequirements[$courseId]) {
                     $course->enrollabled = true;
                 } else {
                     $course->enrollabled = false;
-                    $course->reason = "You do not meet the course requirements";
+                    $course->reason = "You do not meet the course requirements.";
                 }
             } else {
                 $course->enrollabled = true;
