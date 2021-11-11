@@ -16,6 +16,7 @@ class AvailableCourseTransformer extends TransformerAbstract
             'description' => $course->description,
             'enrollabled' => $course->enrollabled,
             'reason' => $course->reason ? $course->reason : '',
+            'requirements' => $course->requirements
         ];
 
         return $courseArray;

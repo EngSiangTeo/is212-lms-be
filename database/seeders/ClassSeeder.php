@@ -25,19 +25,21 @@ class ClassSeeder extends Seeder
             if ($record['trainer_id'] == "null") {
                 CourseClass::firstOrCreate([
                     'course_id'=>$record['course_id'],
-                    'start_time'=>$record['start_time'],
-                    'end_time'=>$record['end_time'],
-                    'start_date'=>Carbon::createFromFormat('d/m/Y', $record['start_date'])->toDateString(),
-                    'end_date'=>Carbon::createFromFormat('d/m/Y', $record['end_date'])->toDateString()
+                    'start_date'=>Carbon::createFromFormat('d/m/Y H:i:s', $record['start_date'])->toDateTimeString(),
+                    'end_date'=>Carbon::createFromFormat('d/m/Y H:i:s', $record['end_date'])->toDateTimeString(),
+                    'enroll_start_date'=>Carbon::createFromFormat('d/m/Y H:i:s', $record['enroll_start_date'])->toDateTimeString(),
+                    'enroll_end_date'=>Carbon::createFromFormat('d/m/Y H:i:s', $record['enroll_end_date'])->toDateTimeString(),
+                    'max_capacity'=>$record['max_capacity']
                 ]);
             } else {
                 CourseClass::firstOrCreate([
                     'course_id'=>$record['course_id'],
                     'trainer_id'=>$record['trainer_id'],
-                    'start_time'=>$record['start_time'],
-                    'end_time'=>$record['end_time'],
-                    'start_date'=>Carbon::createFromFormat('d/m/Y', $record['start_date'])->toDateString(),
-                    'end_date'=>Carbon::createFromFormat('d/m/Y', $record['end_date'])->toDateString()
+                    'start_date'=>Carbon::createFromFormat('d/m/Y H:i:s', $record['start_date'])->toDateTimeString(),
+                    'end_date'=>Carbon::createFromFormat('d/m/Y H:i:s', $record['end_date'])->toDateTimeString(),
+                    'enroll_start_date'=>Carbon::createFromFormat('d/m/Y H:i:s', $record['enroll_start_date'])->toDateTimeString(),
+                    'enroll_end_date'=>Carbon::createFromFormat('d/m/Y H:i:s', $record['enroll_end_date'])->toDateTimeString(),
+                    'max_capacity'=>$record['max_capacity']
                 ]);
             }
         }

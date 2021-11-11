@@ -13,6 +13,11 @@ class Course extends Model
      */
     protected $guarded = [];
     
+    public function enrolled()
+    {
+        return $this->hasMany(userCourseClass::class, 'course_id', 'id');
+    }
+
     public function requirements()
     {
         return $this->belongsToMany(Course::class, 'course_requirements', 'course_id', 'require_course_id');
