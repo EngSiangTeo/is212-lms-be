@@ -17,10 +17,11 @@ class CreateClassesTable extends Migration
             $table->id();
             $table->foreignId('course_id');
             $table->foreignId('trainer_id')->nullable()->references('id')->on('users');
-            $table->time('start_time');
-            $table->time('end_time');
-            $table->date('start_date');
-            $table->date('end_date');
+            $table->dateTime('start_date');
+            $table->dateTime('end_date');
+            $table->dateTime('enroll_start_date');
+            $table->dateTime('enroll_end_date');
+            $table->integer('max_capacity');
             $table->timestamps();
         });
     }
